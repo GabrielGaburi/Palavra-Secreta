@@ -1,0 +1,47 @@
+import random
+
+palavras = ["palmeiras", "artorias", "python", "dissection", "nietzche"]
+palavra_secreta = random.choice(palavras)
+palavra_oculta = ["*"] * len(palavra_secreta)
+letras_tentadas = set()
+numero_tentativas = 20
+quantidade_tentativas = numero_tentativas
+
+for i in range(numero_tentativas):  # O índice 'i' não é necessário aqui
+
+    print("Palavra: ", "".join(palavra_oculta))
+    print("Letras já tentadas:", ", ".join(letras_tentadas) if letras_tentadas else "Nenhuma")
+
+    letra = input("Digite uma letra: ").lower()
+
+    if len(letra) > 1:
+        print("Você digitou mais de uma letra!!!")
+        continue
+
+    if letra in letras_tentadas:
+        print("Você já tentou essa letra antes!")
+        continue
+
+    letras_tentadas.add(letra)
+
+    if not letra.isalpha():  # Verifica se é uma letra
+        print("Digite apenas letras!")
+        continue
+
+    if letra in palavra_secreta:
+        for i in range(len(palavra_secreta)):
+            if palavra_secreta[i] == letra:
+                palavra_oculta[i] = letra
+    else:
+        print("Letra não encontrada!")
+
+    quantidade_tentativas -= 1
+    print(f"Você tem {quantidade_tentativas} tentativas restantes.")
+
+    if "*" not in palavra_oculta:
+        print(f"Parabéns! Você adivinhou a palavra '{palavra_secreta}'!")
+        break
+    elif quantidade_tentativas == 0:
+        print(f"Você perdeu! A palavra era '{palavra_secreta}'.")
+        break
+
